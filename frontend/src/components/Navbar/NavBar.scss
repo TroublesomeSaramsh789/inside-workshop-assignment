@@ -1,0 +1,32 @@
+.navbar{
+    margin: 0rem;
+    padding: 0rem;
+    width: 100%;
+// Removing Default CSS
+    li {
+    list-style: none;
+}
+a {
+    text-decoration: none;
+}
+
+ul {
+    width: 80%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    p {
+        color: rgb(21, 82, 120);
+        font-weight: 600;
+    }
+    h3 {
+        color: white;
+    }
+    .active p {
+        
+        color: whitesmoke;
+       }
+}
+
+}
