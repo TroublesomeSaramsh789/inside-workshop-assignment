@@ -1,6 +1,10 @@
 ## API GUIDE
+
+LOGIN: 
+base-URL/api/v1/auth
+
 GET users: base-URL/api/v1/user
-CREATE users: base-URL/api/v1/user/register
+CREATE users /REGISTER : base-URL/api/v1/user/register
 GET,UPDATE,DELETE user with id: base-URL/api/v1/user/id
 
 

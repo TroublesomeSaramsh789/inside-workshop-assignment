@@ -1,13 +1,14 @@
 import React from "react";
 import { registerUser } from "../../api/usersAPI";
 import { registerUserType } from "../../global";
+import { useNavigate } from 'react-router-dom';
 // tost
 import {toast, Toaster} from "react-hot-toast"
 // style
 import "./RegisterForm.scss";
 
 const RegisterForm = () => {
-
+  const navigate = useNavigate()
   // Form State
   const [UserName, setUserName] = React.useState<string>("");
   const [Phone, setPhone] = React.useState<string>("");
@@ -43,7 +44,8 @@ const RegisterForm = () => {
     };
     registerUser(userData)
       .then((data) => {
-      UserRegister();
+        UserRegister();
+        navigate("/");
     })
       .catch(error => {
         console.log(error)
