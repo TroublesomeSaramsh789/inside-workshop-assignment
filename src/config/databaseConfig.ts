@@ -8,8 +8,8 @@ export const databasePool = async (
   query: string,
   values: string[] | number[]
 ) => {
-  await DBPool.connect();
-  return await DBPool.query(query, values);
+  const Query = await DBPool.connect();
+  return Query.query(query, values); 
 };
 
 

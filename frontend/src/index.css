@@ -8,7 +8,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+html {
+  padding: 0rem;
+  margin: 0rem;
+}
 h1, h2, h3, h4, h5, h6 {
   color: rgb(36, 160, 237);
   margin: 0rem;
@@ -31,6 +34,7 @@ button, input[type="submit"] {
   font-weight: 600;
   color: white;
   background-color: rgb(36, 160, 237);
+  border-radius: 0.5rem;
 }
 
 input[type="submit"]:hover ,input[type="submit"]:active , button:hover , button:active {
@@ -64,4 +68,19 @@ code {
     monospace;
 }
 
+button, a {
+  cursor: pointer;
+}
 
+.loading-text {
+    text-align: center;
+    font-weight: 600;
+    font-size: 28px;
+    color: gray;
+}
+.error-text {
+    text-align: center;
+    font-weight: 600;
+    font-size: 28px;
+    color:brown;
+}

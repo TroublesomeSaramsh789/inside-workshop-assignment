@@ -1,19 +1,10 @@
-Notes to myself
+## API GUIDE
+GET users: base-URL/api/v1/user
+CREATE users: base-URL/api/v1/user/register
+GET,UPDATE,DELETE user with id: base-URL/api/v1/user/id
 
- METHODS: [
-    'ACL',        'BIND',        'CHECKOUT',
-    'CONNECT',    'COPY',        'DELETE',
-    'GET',        'HEAD',        'LINK',
-    'LOCK',       'M-SEARCH',    'MERGE',
-    'MKACTIVITY', 'MKCALENDAR',  'MKCOL',
-    'MOVE',       'NOTIFY',      'OPTIONS',
-    'PATCH',      'POST',        'PRI',
-    'PROPFIND',   'PROPPATCH',   'PURGE',
-    'PUT',        'REBIND',      'REPORT',
-    'SEARCH',     'SOURCE',      'SUBSCRIBE',
-    'TRACE',      'UNBIND',      'UNLINK',
-    'UNLOCK',     'UNSUBSCRIBE'
-  ],
+
+Notes to myself
   STATUS_CODES: {
     '100': 'Continue',
     '101': 'Switching Protocols',

@@ -5,7 +5,7 @@ import LoginController from './login/loginController';
 const V1 = Express.Router();
 
 V1.use("/user", UserController);
-V1.use("/login", LoginController);
+V1.use("/auth", LoginController);
 
 
 V1.get("/",(req,res)=>{

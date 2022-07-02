@@ -1,24 +1,32 @@
-import { databasePool } from "../../config/databaseConfig";
+import { newPool } from "./../../config/dbConfig";
 import { v4 as uuidv4 } from "uuid";
-import { InsertUserType } from './../../../index.d';
+import { InsertUserType } from "./../../../index.d";
+import { generateHash } from './../../util/Hash';
 
-const InsertUser = async (userData: InsertUserType) => {
-  try {
+const InsertUser =  (userData: InsertUserType) => {
+  return generateHash(userData.password).then((data:string) => {
     const { username, email, phone, password, userType } = userData;
-    const result = await databasePool(
-      `INSERT INTO users (user_name,user_email, user_password, user_phone, user_type, user_id) 
-VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
-      [username, email, phone, password, userType, uuidv4()]
-    );
-    console.log(result);
-    if(result.rowCount)
-      return result.rows[0];
-    else 
-      throw {message:"Unable to insert data."}
-  } catch (error) {
-    console.log(error);
-    return error;
-  }
+    return newPool.connect().then((client) => {
+      let hashedPassword = data;
+      console.log(hashedPassword)
+      return client
+        .query(
+          `INSERT INTO users (user_name,user_email, user_password, user_phone, user_type, user_id)
+        VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
+          [username, email, hashedPassword, phone, userType, uuidv4()]
+        )
+        .then((res) => {
+          client.release();
+          console.log("ADDED DATA:", res);
+          return res.rows;
+        })
+        .catch((e) => {
+          client.release();
+          console.log(e);
+          return { message: "Unable to add to the database." };
+        });
+    });
+  })
 };
 
 export default InsertUser;

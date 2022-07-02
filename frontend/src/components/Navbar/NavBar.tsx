@@ -2,7 +2,10 @@ import React from 'react'
 import {NavLink} from "react-router-dom"
 // style
 import "./NavBar.scss"
+import { AuthContext } from './../../context/authContext';
 const NavBar = () => {
+  const AuthData = React.useContext(AuthContext);
+
   return (
     <nav className="navbar">
       <ul>
@@ -11,26 +14,17 @@ const NavBar = () => {
         </li>
 
         <li>
-          <NavLink to="/" className={({ isActive }) => isActive && "active"}>
+          <NavLink to="/">
             <p>Login</p>
           </NavLink>
         </li>
-        <li>
-          <NavLink
-            to="/register"
-            className={({ isActive }) => isActive && "active"}
-          >
-            <p>Register</p>
-          </NavLink>
-        </li>
-        <li>
+        {AuthData.id && AuthData.token && <li>
           <NavLink
             to="/dashboard"
-            className={({ isActive }) => isActive && "active"}
           >
             <p>Dashboard</p>
           </NavLink>
-        </li>
+        </li>}
       </ul>
     </nav>
   );

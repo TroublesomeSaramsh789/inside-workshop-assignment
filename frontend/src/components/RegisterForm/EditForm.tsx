@@ -1,12 +1,17 @@
 import React from "react";
 import { registerUser } from "../../api/usersAPI";
-import { registerUserType } from "../../global";
+import { updateUserType } from "../../global";
 // tost
 import {toast, Toaster} from "react-hot-toast"
 // style
 import "./RegisterForm.scss";
+import { UserSelectionContext } from "../../context/userSelection";
+import { updateUser } from './../../api/usersAPI';
 
-const RegisterForm = () => {
+const EditForm = () => {
+
+  // Context
+  const UserContext = React.useContext(UserSelectionContext);
 
   // Form State
   const [UserName, setUserName] = React.useState<string>("");
@@ -18,8 +23,8 @@ const RegisterForm = () => {
   const [PassError, setPassError] = React.useState<boolean>(false);
   // TOAST
   const UserRegister = () =>
-    toast.success(`User: ${UserName} Register Successfully.`);
-  const UserRegisterFailed = () => toast.error("User Register Failed.");
+    toast.success(`User: ${UserName} Updated Successfully.`);
+  const UserRegisterFailed = () => toast.error("User Update Failed.");
   
   const HidePassChangeHandler = () => {
     setHidePass((e) => {
@@ -34,14 +39,15 @@ const RegisterForm = () => {
   // SUBMIT HANDLER
   const formSubmitHandler = (e: any) => {
     e.preventDefault();
-    const userData: registerUserType = {
+    const userData: updateUserType = {
       username: UserName,
       phone: Phone,
-      email:Email,
+      email: Email,
       password: Password,
-      userType:UserType,
+      userType: UserType,
+      user_id: UserContext.LatestId,
     };
-    registerUser(userData)
+    updateUser(userData)
       .then((data) => {
       UserRegister();
     })
@@ -54,7 +60,7 @@ const RegisterForm = () => {
 
   return (
     <div className="form">
-      <h2>Register Form</h2>
+      <h2>Update Form</h2>
       <form onSubmit={formSubmitHandler}>
         <div className="form-input">
           <label htmlFor="name">Full Name:</label>
@@ -141,4 +147,4 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;
+export default EditForm;

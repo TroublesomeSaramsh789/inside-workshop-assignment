@@ -1,12 +1,20 @@
 import React from "react";
-import {Link} from "react-router-dom"
-// style
-// import "./LoginForm.scss";
+import {Link,useNavigate} from "react-router-dom"
+import { loginUser } from "../../api/authAPI";
+import {Toaster, toast} from "react-hot-toast"
 
 const LoginForm = () => {
+  const [user,setUser] = React.useState("User")
   const [Email, setEmail] = React.useState("");
   const [Password, setPassword] = React.useState("");
   const [HidePass, setHidePass] = React.useState(false);
+
+  const navigate = useNavigate();
+
+  // TOAST
+  const UserLoginSuccess = () =>
+    toast.success(`Welcome Back ${user}`);
+  const UserLoginFailed = () => toast.error("Login Failed.");
 
   const HidePassChangeHandler = () => {
     setHidePass((e) => {
@@ -14,12 +22,25 @@ const LoginForm = () => {
     });
   };
 
-  const inputChangeHandler = (e:any, setState:any) => {
+  const inputChangeHandler = (e: any, setState: any) => {
     setState(e.target.value);
   };
-  const formSubmitHandler = (e:any) => {
+  const formSubmitHandler = (e: any) => {
     e.preventDefault();
     console.log("Form Data:", { name: Email, password: Password });
+    loginUser(Email, Password)
+      .then((data) => {
+        console.log(data)
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("id", data.id);
+        setUser(data.user_name)
+        UserLoginSuccess();
+        navigate("/dashboard")
+      })
+      .catch((error) => {
+        console.log(error);
+        UserLoginFailed();
+      });
   };
 
   return (
@@ -57,14 +78,13 @@ const LoginForm = () => {
         <div className="form-input">
           <input type="submit" value="Login" />
         </div>
-      <div className="flex">
-      <p>
-      Don't Have An Account ?
-      </p>
-      <Link to={"/register"}>Register</Link>
-      </div>
+        <div className="flex">
+          <p>Don't Have An Account ?</p>
+          <Link to={"/register"}>Register</Link>
+        </div>
       </form>
-      </div>
+      <Toaster />
+    </div>
   );
 };
 
